@@ -10,7 +10,7 @@ pip install -r requirements.txt
 該程式需要安裝VB-CABLE Virtual Audio Device
 [網站連結:https://vb-audio.com/Cable/](https://vb-audio.com/Cable/)
 
-### First
+### First ###
 執行device_check.py
 將CABLE Output (VB-Audio Virtual Cable)編號設為device_id
 
