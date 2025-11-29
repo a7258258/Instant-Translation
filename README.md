@@ -18,7 +18,6 @@ Whisper 支援超過 50 種語言 在result後加上即可
 result = model.transcribe(audio_chunk, fp16=False, language='en')  #英文
 result = model.transcribe(audio_chunk, fp16=False, language='ja')  #日文
 result = model.transcribe(audio_chunk, fp16=False, language='zh')  #中文
----
 
 ### Second
 執行Translate.py
