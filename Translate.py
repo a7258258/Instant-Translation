@@ -11,10 +11,10 @@ sample_rate = 48000
 device_id = 23   # CABLE Output
 chunk_duration = 10
 
-print("🎙️ 開始即時翻譯，按 Ctrl+C 停止")
+print("開始即時翻譯，按 Ctrl+C 停止")
 5
 while True:
-    print("⏺️ 錄音中...")
+    print("錄音中...")
     recording = sd.rec(int(chunk_duration * sample_rate),
                        samplerate=sample_rate,
                        channels=2,
@@ -34,6 +34,6 @@ while True:
     if english_text:
         print(f"\n🗣️ 英文辨識結果：{english_text}")
         translated = translator.translate(english_text)
-        print(f"🌐 中文翻譯：{translated}\n")
+        print(f"中文翻譯：{translated}\n")
     else:
-        print("🤷 沒有辨識到語音內容")
+        print("沒有辨識到語音內容")
