@@ -15,9 +15,10 @@ pip install -r requirements.txt
 將CABLE Output (VB-Audio Virtual Cable)編號設為device_id
 
 Whisper 支援超過 50 種語言 在result後加上即可
+```bash
 result = model.transcribe(audio_chunk, fp16=False, language='en')  #英文
 result = model.transcribe(audio_chunk, fp16=False, language='ja')  #日文
 result = model.transcribe(audio_chunk, fp16=False, language='zh')  #中文
-
+```
 ### Second
 執行Translate.py
