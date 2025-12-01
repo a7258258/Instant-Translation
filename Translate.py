@@ -5,6 +5,7 @@ import whisper
 import librosa
 from deep_translator import GoogleTranslator
 import numpy as np
+import time
 
 model = whisper.load_model("medium")
 translator = GoogleTranslator(source='auto', target='zh-TW')
@@ -36,13 +37,17 @@ def audio_callback(indata, frames, time, status):
         # 轉單聲道 + 重採樣
         audio_chunk = librosa.to_mono(audio_data.T)
         audio_chunk = librosa.resample(audio_chunk, orig_sr=sample_rate, target_sr=16000)
+        if np.max(np.abs(audio_chunk)) < 0.01:
+            print("偵測到靜音，跳過")
+            return
         audio_queue.put(audio_chunk)
+
 
 
 def process_audio():
     while True:
         audio_chunk = audio_queue.get()
-        result = model.transcribe(audio_chunk, fp16=False, language='en')
+        result = model.transcribe(audio_chunk, fp16=False, language='ja')
         text = result["text"].strip()
         if text:
             print(f"\n辨識結果：{text}")
@@ -57,4 +62,8 @@ threading.Thread(target=process_audio, daemon=True).start()
 
 # 開啟持續錄音 stream
 with sd.InputStream(samplerate=sample_rate, channels=2, device=device_id, callback=audio_callback):
-    threading.Event().wait()  # 主程式保持運行
+    try:
+        while True:
+            time.sleep(0.05)  # 每秒睡眠，允許 Ctrl+C 中斷
+    except KeyboardInterrupt:
+        print("\n已停止程式")
